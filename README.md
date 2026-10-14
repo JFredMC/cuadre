@@ -3,8 +3,8 @@
 **Calculadoras laborales y de seguridad social para Colombia, con valores 2026.**
 Demo: **https://cuadrelaboral.com/**
 
-| Calculadora                                                                                          | Qué calcula                                                                  |
-| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Calculadora                                                                                   | Qué calcula                                                                  |
+| --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | [Liquidación laboral](https://cuadrelaboral.com/liquidacion/)                                 | Cesantías, intereses, prima y vacaciones con fechas del contrato y salario   |
 | [Salario neto](https://cuadrelaboral.com/salario-neto/)                                       | Salud 4%, pensión 4%, Fondo de Solidaridad Pensional y auxilio de transporte |
 | [Prima de servicios](https://cuadrelaboral.com/prima/)                                        | Prima de junio o diciembre según días trabajados                             |
