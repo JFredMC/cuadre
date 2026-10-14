@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ResultTable } from './result-table';
+import { DocFormat, ResultDoc, buildResultDoc, docFileName, readInputs } from './result-docs';
 import { ShareCardData, canShareFiles, shareCardPng, shareFileName } from './share-card';
 
 /** Compartir el resultado (imagen + texto) por WhatsApp, descargar la imagen o copiar el enlace. */
@@ -27,15 +28,29 @@ import { ShareCardData, canShareFiles, shareCardPng, shareFileName } from './sha
       >
         Compartir por WhatsApp
       </a>
-      <button
-        type="button"
-        class="btn btn-ghost"
-        data-testid="download-card"
-        aria-label="Descargar imagen del resultado"
-        (click)="download()"
-      >
-        Descargar imagen
-      </button>
+      <details class="dl-menu" #menu>
+        <summary class="btn btn-ghost" aria-label="Descargar el resultado">Descargar</summary>
+        <div class="dl-list">
+          <button
+            type="button"
+            data-testid="download-card"
+            aria-label="Descargar imagen del resultado"
+            (click)="download(); menu.open = false"
+          >
+            Imagen (PNG)
+          </button>
+          @for (f of formats; track f.id) {
+            <button
+              type="button"
+              [attr.data-testid]="'download-' + f.id"
+              [attr.aria-label]="'Descargar el resultado en ' + f.name"
+              (click)="downloadDoc(f.id); menu.open = false"
+            >
+              {{ f.name }}
+            </button>
+          }
+        </div>
+      </details>
       <button type="button" class="btn btn-ghost" (click)="copy()">
         {{ copied() ? '¡Enlace copiado!' : 'Copiar enlace' }}
       </button>
@@ -48,6 +63,11 @@ export class ShareBar {
   private readonly table = inject(ResultTable, { optional: true });
   private readonly host = inject(ElementRef<HTMLElement>);
   private readonly doc = inject(DOCUMENT);
+  protected readonly formats: { id: DocFormat; name: string }[] = [
+    { id: 'pdf', name: 'PDF' },
+    { id: 'xlsx', name: 'Excel (.xlsx)' },
+    { id: 'docx', name: 'Word (.docx)' },
+  ];
   protected readonly copied = signal(false);
   protected readonly message = computed(() => `${this.text()}\n${this.url()}`);
   protected readonly waHref = computed(
@@ -97,13 +117,40 @@ export class ShareBar {
     this.doc.defaultView?.open(this.waHref(), '_blank', 'noopener,noreferrer');
   }
 
+  /** Datos completos para PDF, Excel y Word. */
+  docData(): ResultDoc | null {
+    const card = this.cardData();
+    if (!card) return null;
+    const el = this.host.nativeElement as HTMLElement;
+    const root = el.closest('.calc') ?? this.doc;
+    return {
+      ...card,
+      generatedAt: new Date(),
+      inputs: readInputs(root.querySelector('form')),
+      disclaimer:
+        root.querySelector('.disclaimer')?.textContent?.replace(/\s+/g, ' ').trim() ??
+        'Los resultados son aproximados y no constituyen asesoría legal ni contable.',
+      url: this.url(),
+    };
+  }
+
+  async downloadDoc(fmt: DocFormat): Promise<void> {
+    const data = this.docData();
+    if (!data) return;
+    const blob = await buildResultDoc(data, fmt);
+    this.save(blob, docFileName(data.title, fmt));
+  }
+
   async download(): Promise<void> {
     const file = await this.makeFile();
-    if (!file) return;
-    const href = URL.createObjectURL(file);
+    if (file) this.save(file, file.name);
+  }
+
+  private save(blob: Blob, name: string): void {
+    const href = URL.createObjectURL(blob);
     const a = this.doc.createElement('a');
     a.href = href;
-    a.download = file.name;
+    a.download = name;
     a.click();
     setTimeout(() => URL.revokeObjectURL(href), 1000);
   }

@@ -73,6 +73,7 @@ test('sin AdSense configurado no hay anuncios', async ({ page }) => {
 test('descargar imagen genera el PNG de la tarjeta', async ({ page }) => {
   await page.goto('liquidacion/');
   await expect(page.getByTestId('total')).toBeVisible();
+  await page.getByText('Descargar', { exact: true }).click();
   const [download] = await Promise.all([
     page.waitForEvent('download'),
     page.getByRole('button', { name: 'Descargar imagen del resultado' }).click(),
@@ -84,3 +85,25 @@ test('descargar imagen genera el PNG de la tarjeta', async ({ page }) => {
   expect(buf.subarray(1, 4).toString()).toBe('PNG');
   if (process.env['SHARE_CARD_OUT']) fs.copyFileSync(path, process.env['SHARE_CARD_OUT']);
 });
+
+for (const [fmt, name, sig] of [
+  ['pdf', 'PDF', '%PDF'],
+  ['xlsx', 'Excel (.xlsx)', 'PK'],
+  ['docx', 'Word (.docx)', 'PK'],
+] as const) {
+  test(`descargar el resultado en ${name}`, async ({ page }) => {
+    await page.goto('liquidacion/');
+    await expect(page.getByTestId('total')).toBeVisible();
+    await page.getByText('Descargar', { exact: true }).click();
+    const [download] = await Promise.all([
+      page.waitForEvent('download'),
+      page.getByRole('button', { name: `Descargar el resultado en ${name}` }).click(),
+    ]);
+    expect(download.suggestedFilename()).toMatch(new RegExp(`^cuadre-.+\\.${fmt}$`));
+    const fs = await import('node:fs');
+    const path = await download.path();
+    expect(fs.readFileSync(path).subarray(0, sig.length).toString()).toBe(sig);
+    const out = process.env['DOCS_OUT'];
+    if (out) fs.copyFileSync(path, `${out}/sample.${fmt}`);
+  });
+}
