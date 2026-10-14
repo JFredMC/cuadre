@@ -374,3 +374,41 @@ details p {
     padding-top: 2rem;
   }
 }
+.dl-menu {
+  position: relative;
+}
+.dl-menu > summary {
+  list-style: none;
+}
+.dl-menu > summary::-webkit-details-marker {
+  display: none;
+}
+.dl-menu > summary::after {
+  content: ' ▾';
+}
+.dl-list {
+  position: absolute;
+  z-index: 5;
+  bottom: calc(100% + 0.4rem);
+  left: 0;
+  min-width: 11rem;
+  display: grid;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.dl-list button {
+  font: inherit;
+  text-align: left;
+  padding: 0.7rem 1rem;
+  min-height: 2.75rem;
+  border: 0;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+}
+.dl-list button:hover,
+.dl-list button:focus-visible {
+  background: #e7f3f1;
+}
