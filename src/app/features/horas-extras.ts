@@ -44,8 +44,7 @@ const pct = (n: number) => `${Math.round(n * 100)}%`;
           }}
           h al mes), recargo dominical del <strong>{{ pct(regime().sundaySurcharge) }}</strong> y
           nocturno desde las
-          <strong>{{ regime().nightStartHour === 19 ? '7:00 p. m.' : '9:00 p. m.' }}</strong
-          >.
+          <strong>{{ regime().nightStartHour === 19 ? '7:00 p. m.' : '9:00 p. m.' }}</strong>
         </p>
         <fieldset class="hours">
           <legend>Horas trabajadas en el mes</legend>
