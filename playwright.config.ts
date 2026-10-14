@@ -1,11 +1,11 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * E2E tests against the GitHub Pages build (`pnpm build:pages`), served under /cuadre/.
- * E2E_BASE_URL=https://jfredmc.github.io/cuadre/ runs them against the live site.
+ * E2E tests against the GitHub Pages build (`pnpm build:pages`), served at the root (/).
+ * E2E_BASE_URL=https://cuadrelaboral.com/ runs them against the live site.
  */
 const liveUrl = process.env['E2E_BASE_URL'];
-const baseURL = liveUrl ?? 'http://localhost:4320/cuadre/';
+const baseURL = liveUrl ?? 'http://localhost:4320/';
 const isCI = !!process.env['CI'];
 
 export default defineConfig({

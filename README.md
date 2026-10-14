@@ -1,16 +1,16 @@
 # Cuadre
 
 **Calculadoras laborales y de seguridad social para Colombia, con valores 2026.**
-Demo: **https://jfredmc.github.io/cuadre/**
+Demo: **https://cuadrelaboral.com/**
 
 | Calculadora                                                                                          | Qué calcula                                                                  |
 | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [Liquidación laboral](https://jfredmc.github.io/cuadre/liquidacion/)                                 | Cesantías, intereses, prima y vacaciones con fechas del contrato y salario   |
-| [Salario neto](https://jfredmc.github.io/cuadre/salario-neto/)                                       | Salud 4%, pensión 4%, Fondo de Solidaridad Pensional y auxilio de transporte |
-| [Prima de servicios](https://jfredmc.github.io/cuadre/prima/)                                        | Prima de junio o diciembre según días trabajados                             |
-| [Intereses de cesantías](https://jfredmc.github.io/cuadre/intereses-cesantias/)                      | 12% anual proporcional                                                       |
-| [Horas extras y recargos](https://jfredmc.github.io/cuadre/horas-extras/)                            | Jornada y recargo dominical según la fecha (42 h y 90% desde julio de 2026)  |
-| [Seguridad social independientes](https://jfredmc.github.io/cuadre/seguridad-social-independientes/) | IBC 40%, salud 12,5%, pensión 16%, FSP y ARL                                 |
+| [Liquidación laboral](https://cuadrelaboral.com/liquidacion/)                                 | Cesantías, intereses, prima y vacaciones con fechas del contrato y salario   |
+| [Salario neto](https://cuadrelaboral.com/salario-neto/)                                       | Salud 4%, pensión 4%, Fondo de Solidaridad Pensional y auxilio de transporte |
+| [Prima de servicios](https://cuadrelaboral.com/prima/)                                        | Prima de junio o diciembre según días trabajados                             |
+| [Intereses de cesantías](https://cuadrelaboral.com/intereses-cesantias/)                      | 12% anual proporcional                                                       |
+| [Horas extras y recargos](https://cuadrelaboral.com/horas-extras/)                            | Jornada y recargo dominical según la fecha (42 h y 90% desde julio de 2026)  |
+| [Seguridad social independientes](https://cuadrelaboral.com/seguridad-social-independientes/) | IBC 40%, salud 12,5%, pensión 16%, FSP y ARL                                 |
 
 <p>
   <img src="docs/mobile-liquidacion.png" width="240" alt="Liquidación en celular" />

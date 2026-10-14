@@ -1,6 +1,6 @@
 name: E2E against the live demo
 
-# Corre la suite de Playwright contra https://jfredmc.github.io/cuadre/ después de cada
+# Corre la suite de Playwright contra https://cuadrelaboral.com/ después de cada
 # despliegue a Pages (y a mano).
 on:
   workflow_run:
@@ -29,4 +29,4 @@ jobs:
         run: sleep 30
       - run: pnpm e2e
         env:
-          E2E_BASE_URL: https://jfredmc.github.io/cuadre/
+          E2E_BASE_URL: https://cuadrelaboral.com/
