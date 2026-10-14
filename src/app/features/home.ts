@@ -71,6 +71,14 @@ import { AdSlot } from '../shared/ad-slot';
         Valores actualizados a {{ updated }}.
       </p>
     </section>
+    <section class="card values" aria-labelledby="plantillas">
+      <h2 id="plantillas">Plantillas de Excel</h2>
+      <p>
+        ¿Necesitas liquidar a varios o llevar la nómina de tu negocio? Las mismas fórmulas, en
+        Excel, listas para descargar.
+      </p>
+      <p><a class="btn" routerLink="/plantillas">Ver plantillas</a></p>
+    </section>
     <p class="disclaimer" role="note">
       Los resultados son aproximados y no constituyen asesoría legal ni contable.
     </p>

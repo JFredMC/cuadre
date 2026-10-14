@@ -6,6 +6,7 @@ import { HorasExtras } from './horas-extras';
 import { Independientes } from './independientes';
 import { Intereses } from './intereses';
 import { Liquidacion } from './liquidacion';
+import { Plantillas } from './plantillas';
 import { Prima } from './prima';
 import { SalarioNeto } from './salario-neto';
 
@@ -46,5 +47,18 @@ describe('páginas de calculadoras', () => {
     const fixture = TestBed.createComponent(Liquidacion);
     fixture.detectChanges();
     expect((fixture.nativeElement as HTMLElement).querySelector('.adsbygoogle')).toBeNull();
+  });
+});
+
+describe('página de plantillas', () => {
+  it('muestra las tres plantillas con Próximamente y muestra descargable', () => {
+    TestBed.configureTestingModule({ imports: [Plantillas], providers: [provideRouter(routes)] });
+    const fixture = TestBed.createComponent(Plantillas);
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('h1')?.textContent).toContain('Plantillas de Excel');
+    expect(el.querySelectorAll('.plantilla').length).toBe(3);
+    expect(el.textContent).toContain('Próximamente');
+    expect(el.querySelector('a[download]')?.getAttribute('href')).toContain('MUESTRA.xlsx');
   });
 });
