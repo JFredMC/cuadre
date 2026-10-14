@@ -25,9 +25,7 @@ test('inicio lista las seis calculadoras y los valores 2026', async ({ page }) =
 for (const [slug, name] of pages) {
   test(`${slug}: HTML prerenderizado con SEO, fuente y aviso`, async ({ page, request }) => {
     const html = await (await request.get(`${slug}/`)).text();
-    expect(html).toContain(
-      `<link rel="canonical" href="https://cuadrelaboral.com/${slug}/">`,
-    );
+    expect(html).toContain(`<link rel="canonical" href="https://cuadrelaboral.com/${slug}/">`);
     expect(html).toContain('"FAQPage"');
     expect(html).toContain('data-testid="total"');
     await page.goto(`${slug}/`);
