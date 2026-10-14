@@ -61,7 +61,7 @@ test('el enlace compartido restaura los datos y WhatsApp lleva el resultado', as
 
 test('sitemap y robots', async ({ request }) => {
   const sitemap = await (await request.get('sitemap.xml')).text();
-  expect(sitemap.match(/<loc>/g)).toHaveLength(7);
+  expect(sitemap.match(/<loc>/g)).toHaveLength(8);
   expect(await (await request.get('robots.txt')).text()).toContain('sitemap.xml');
 });
 
