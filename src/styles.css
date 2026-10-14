@@ -1,1 +1,376 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --bg: #f6f7f4;
+  --card: #fff;
+  --ink: #18222b;
+  --muted: #5b6770;
+  --line: #e2e6e1;
+  --brand: #0f766e;
+  --brand-ink: #fff;
+  --accent: #f4b740;
+  --neg: #b42318;
+  --radius: 14px;
+  color-scheme: light;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.5;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+a {
+  color: var(--brand);
+}
+h1 {
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
+}
+h2 {
+  font-size: 1.15rem;
+  margin: 1.5rem 0 0.5rem;
+}
+.skip {
+  position: absolute;
+  left: -999px;
+}
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+  background: #fff;
+  padding: 0.5rem;
+  z-index: 10;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--brand);
+  color: var(--brand-ink);
+  padding: 0.6rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.brand {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+}
+.logo {
+  color: var(--accent);
+}
+.nav {
+  display: flex;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0.2rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav a {
+  display: block;
+  white-space: nowrap;
+  color: #d9f2ee;
+  text-decoration: none;
+  font-size: 0.875rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+}
+.nav a.active,
+.nav a:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+}
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2rem;
+}
+.lead {
+  color: var(--muted);
+  margin: 0 0 1rem;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+.form {
+  display: grid;
+  gap: 0.9rem;
+}
+.grid2 {
+  display: grid;
+  gap: 0.9rem;
+}
+.field {
+  display: grid;
+  gap: 0.3rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.field small {
+  font-weight: 400;
+  color: var(--muted);
+}
+.field.inline {
+  grid-template-columns: 1fr 6.5rem;
+  align-items: center;
+  font-weight: 500;
+}
+input,
+select {
+  font: inherit;
+  font-size: 1rem;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #c9d1cc;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+}
+input:focus,
+select:focus {
+  outline: 3px solid rgba(15, 118, 110, 0.25);
+  border-color: var(--brand);
+}
+.money {
+  position: relative;
+  display: block;
+}
+.money > span {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+}
+.money input {
+  padding-left: 1.6rem;
+}
+fieldset.hours {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+legend {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.regime {
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  background: #eef8f6;
+  border-radius: 10px;
+  font-size: 0.92rem;
+}
+.result {
+  margin-top: 1rem;
+  background: #10302d;
+  color: #eaf6f4;
+  border-radius: var(--radius);
+  padding: 1.1rem 1rem;
+}
+.total-label {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #a8d5ce;
+}
+.total {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.9rem, 8vw, 2.6rem);
+  font-weight: 800;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+dl {
+  margin: 0;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.45rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.values .row {
+  border-color: var(--line);
+}
+dt small {
+  display: block;
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+dd {
+  margin: 0;
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+dd.neg {
+  color: #ffb4a8;
+}
+.note {
+  font-size: 0.85rem;
+  color: #c7e3de;
+}
+.share {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+}
+.btn-wa {
+  background: #25d366;
+  color: #062b14;
+  flex: 1 1 auto;
+}
+.btn-ghost {
+  background: transparent;
+  color: #eaf6f4;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+.disclaimer {
+  font-size: 0.85rem;
+  color: var(--muted);
+  border-left: 3px solid var(--accent);
+  padding-left: 0.7rem;
+  margin: 1.2rem 0;
+}
+.sources ul {
+  padding-left: 1.1rem;
+  margin: 0;
+}
+.sources li {
+  margin: 0.25rem 0;
+}
+.updated {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+details {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  margin: 0.5rem 0;
+}
+summary {
+  font-weight: 600;
+  cursor: pointer;
+}
+details p {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+}
+.chips {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.chips a {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.cards {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+.link-card {
+  display: flex;
+  gap: 0.8rem;
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color 0.15s;
+}
+.link-card:hover {
+  border-color: var(--brand);
+}
+.link-card .icon {
+  font-size: 1.6rem;
+}
+.link-card small {
+  display: block;
+  color: var(--muted);
+}
+.values h2 {
+  margin-top: 0;
+}
+.error {
+  color: var(--neg);
+  font-weight: 600;
+}
+.ad {
+  margin: 1.2rem 0;
+  min-height: 100px;
+}
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 1rem 2rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+.footer p {
+  margin: 0.3rem 0;
+}
+.signature a {
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+@media (min-width: 720px) {
+  .topbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 1.5rem;
+  }
+  .grid2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+  .container {
+    padding-top: 2rem;
+  }
+}

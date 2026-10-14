@@ -1,8 +1,4 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
 
-export const serverRoutes: ServerRoute[] = [
-  {
-    path: '**',
-    renderMode: RenderMode.Prerender,
-  },
-];
+/** Todo se prerenderiza como HTML estático para GitHub Pages. */
+export const serverRoutes: ServerRoute[] = [{ path: '**', renderMode: RenderMode.Prerender }];
