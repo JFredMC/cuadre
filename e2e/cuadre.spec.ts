@@ -69,3 +69,18 @@ test('sin AdSense configurado no hay anuncios', async ({ page }) => {
   await page.goto('liquidacion/');
   await expect(page.locator('.adsbygoogle')).toHaveCount(0);
 });
+
+test('descargar imagen genera el PNG de la tarjeta', async ({ page }) => {
+  await page.goto('liquidacion/');
+  await expect(page.getByTestId('total')).toBeVisible();
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    page.getByRole('button', { name: 'Descargar imagen del resultado' }).click(),
+  ]);
+  expect(download.suggestedFilename()).toMatch(/^cuadre-.+\.png$/);
+  const path = await download.path();
+  const fs = await import('node:fs');
+  const buf = fs.readFileSync(path);
+  expect(buf.subarray(1, 4).toString()).toBe('PNG');
+  if (process.env['SHARE_CARD_OUT']) fs.copyFileSync(path, process.env['SHARE_CARD_OUT']);
+});
