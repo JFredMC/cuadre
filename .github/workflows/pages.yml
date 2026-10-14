@@ -1,6 +1,6 @@
 name: Deploy to GitHub Pages
 
-# Publica Cuadre (HTML prerenderizado, sin backend) en https://jfredmc.github.io/cuadre/.
+# Publica Cuadre (HTML prerenderizado, sin backend) en https://cuadrelaboral.com/.
 # AdSense se activa con las variables del repo ADSENSE_CLIENT (ca-pub-...) y ADSENSE_SLOT.
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - uses: actions/configure-pages@v5
-      - name: Build (base href /cuadre/)
+      - name: Build (base href /)
         run: pnpm build:pages
         env:
           ADSENSE_CLIENT: ${{ vars.ADSENSE_CLIENT }}

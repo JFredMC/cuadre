@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:pages": "node scripts/write-ads-config.mjs && ng build --base-href /cuadre/ && node scripts/postbuild-pages.mjs",
+    "build:pages": "node scripts/write-ads-config.mjs && ng build --base-href / && node scripts/postbuild-pages.mjs",
     "serve:pages": "node scripts/serve-pages.mjs",
     "test": "ng test --watch=false",
     "lint": "ng lint",

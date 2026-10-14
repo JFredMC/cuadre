@@ -26,7 +26,7 @@ for (const [slug, name] of pages) {
   test(`${slug}: HTML prerenderizado con SEO, fuente y aviso`, async ({ page, request }) => {
     const html = await (await request.get(`${slug}/`)).text();
     expect(html).toContain(
-      `<link rel="canonical" href="https://jfredmc.github.io/cuadre/${slug}/">`,
+      `<link rel="canonical" href="https://cuadrelaboral.com/${slug}/">`,
     );
     expect(html).toContain('"FAQPage"');
     expect(html).toContain('data-testid="total"');

@@ -35,7 +35,7 @@ describe('páginas de calculadoras', () => {
       );
       const doc = TestBed.inject(DOCUMENT);
       expect(doc.head.querySelector('link[rel="canonical"]')?.getAttribute('href')).toMatch(
-        /^https:\/\/jfredmc\.github\.io\/cuadre\/.+\/$/,
+        /^https:\/\/cuadrelaboral\.com\/.+\/$/,
       );
       expect(doc.head.querySelector('script[data-seo]')?.textContent).toContain('FAQPage');
     });

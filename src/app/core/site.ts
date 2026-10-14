@@ -1,7 +1,7 @@
 import { LegalSource, SOURCES } from './calc';
 
 export const SITE_NAME = 'Cuadre';
-export const SITE_URL = 'https://jfredmc.github.io/cuadre/';
+export const SITE_URL = 'https://cuadrelaboral.com/';
 export const PORTFOLIO_URL = 'https://jfredmc.github.io/portfolio/';
 export const NAPA_URL = 'https://napaofertas.com';
 

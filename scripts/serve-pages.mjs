@@ -1,4 +1,4 @@
-// Serves dist/pages like GitHub Pages does: under /cuadre/, static files
+// Serves dist/pages like GitHub Pages does: at the root (/), static files
 // only, and 404.html (with status 404) for anything else.
 // Used by the demo Playwright suite: `pnpm serve:pages` after `pnpm build:pages`.
 import { createReadStream, existsSync, statSync } from 'node:fs';
@@ -6,7 +6,7 @@ import { createServer } from 'node:http';
 import { extname, join, normalize } from 'node:path';
 
 const root = new URL('../dist/cuadre/browser/', import.meta.url).pathname;
-const base = '/cuadre/';
+const base = '/';
 const port = Number(process.env.PORT ?? 4320);
 const types = {
   '.html': 'text/html; charset=utf-8',
@@ -30,7 +30,7 @@ function send(res, status, file) {
 
 createServer((req, res) => {
   const path = decodeURIComponent(new URL(req.url ?? '/', 'http://localhost').pathname);
-  if (path === base.slice(0, -1)) {
+  if (base !== '/' && path === base.slice(0, -1)) {
     res.writeHead(301, { Location: base }).end();
     return;
   }

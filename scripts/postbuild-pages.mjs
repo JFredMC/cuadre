@@ -2,7 +2,7 @@
 import { copyFileSync, existsSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-const SITE = 'https://jfredmc.github.io/cuadre/';
+const SITE = 'https://cuadrelaboral.com/';
 const out = new URL('../dist/cuadre/browser/', import.meta.url).pathname;
 
 copyFileSync(
@@ -10,6 +10,7 @@ copyFileSync(
   join(out, '404.html'),
 );
 writeFileSync(join(out, '.nojekyll'), '');
+writeFileSync(join(out, 'CNAME'), 'cuadrelaboral.com\n');
 
 const routes = [''];
 for (const name of readdirSync(out)) {
