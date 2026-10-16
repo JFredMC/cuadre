@@ -51,14 +51,55 @@ describe('páginas de calculadoras', () => {
 });
 
 describe('página de plantillas', () => {
-  it('muestra las tres plantillas con Próximamente y muestra descargable', () => {
+  it('muestra las tres plantillas con botón Comprar, combo y muestra descargable', () => {
     TestBed.configureTestingModule({ imports: [Plantillas], providers: [provideRouter(routes)] });
     const fixture = TestBed.createComponent(Plantillas);
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('h1')?.textContent).toContain('Plantillas de Excel');
     expect(el.querySelectorAll('.plantilla').length).toBe(3);
-    expect(el.textContent).toContain('Próximamente');
+    expect(el.textContent).not.toContain('Próximamente');
+    expect(el.querySelectorAll('button[data-testid^="buy-"]').length).toBe(4);
+    expect(el.textContent).not.toContain('Hotmart');
     expect(el.querySelector('a[download]')?.getAttribute('href')).toContain('MUESTRA.xlsx');
+  });
+});
+
+describe('pagos de plantillas', () => {
+  it('arma la URL del Web Checkout con la llave pública, la firma y la redirección', async () => {
+    const { PaymentsService, PAYMENTS } = await import('../core/payments');
+    const url = new URL(
+      new PaymentsService().buildCheckoutUrl(
+        {
+          reference: 'CUA-NOMINA-X',
+          amountInCents: 2_990_000,
+          currency: 'COP',
+          signature: 'abc',
+          redirectUrl: 'https://cuadrelaboral.com/plantillas/gracias',
+        },
+        'a@b.co',
+      ),
+    );
+    expect(url.origin + url.pathname).toBe(PAYMENTS.checkoutUrl);
+    expect(url.searchParams.get('public-key')).toMatch(/^pub_prod_/);
+    expect(url.searchParams.get('amount-in-cents')).toBe('2990000');
+    expect(url.searchParams.get('signature:integrity')).toBe('abc');
+    expect(url.searchParams.get('customer-data:email')).toBe('a@b.co');
+    expect(url.searchParams.get('redirect-url')).toBe(
+      'https://cuadrelaboral.com/plantillas/gracias?ref=CUA-NOMINA-X',
+    );
+  });
+
+  it('la página de gracias se renderiza sin red (estado inicial)', async () => {
+    const { PlantillasGracias } = await import('./plantillas-gracias');
+    TestBed.configureTestingModule({
+      imports: [PlantillasGracias],
+      providers: [provideRouter(routes)],
+    });
+    const fixture = TestBed.createComponent(PlantillasGracias);
+    fixture.detectChanges();
+    expect((fixture.nativeElement as HTMLElement).querySelector('h1')?.textContent).toContain(
+      'Gracias',
+    );
   });
 });
