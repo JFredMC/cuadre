@@ -1,17 +1,15 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { LAST_ORDER_KEY, PaymentsService, type Sku } from '../core/payments';
 import { SeoService } from '../core/seo.service';
 
 interface Plantilla {
-  id: string;
+  id: Sku;
   name: string;
   blurb: string;
   price: string;
   image: string;
   sample: string;
-  comingSoon: boolean;
-  /** Enlace de pago (Hotmart) cuando exista el producto. */
-  buy?: string;
 }
 
 @Component({
@@ -27,6 +25,26 @@ interface Plantilla {
         llenar, el resto se calcula solo. Valores 2026 (SMMLV, auxilio, jornada y recargos).
       </p>
     </section>
+
+    <div class="card buyer">
+      <label for="buyer-email">Tu correo (opcional)</label>
+      <input
+        id="buyer-email"
+        type="email"
+        autocomplete="email"
+        inputmode="email"
+        placeholder="tucorreo@ejemplo.com"
+        [value]="email()"
+        (input)="email.set($any($event.target).value)"
+      />
+      <small
+        >Pagas con Wompi (PSE, Nequi, tarjeta o Bancolombia). Al aprobarse el pago descargas el
+        archivo de inmediato en esta misma página.</small
+      >
+      @if (error()) {
+        <p class="error" role="alert">{{ error() }}</p>
+      }
+    </div>
 
     <ul class="cards plantilla-list">
       @for (p of plantillas; track p.id) {
@@ -45,11 +63,15 @@ interface Plantilla {
             <p class="price">{{ p.price }}</p>
             <div class="actions">
               <a class="btn btn-ghost" [href]="p.sample" download>Descargar muestra</a>
-              @if (p.comingSoon) {
-                <button type="button" class="btn" disabled>Próximamente</button>
-              } @else {
-                <a class="btn" [href]="p.buy" target="_blank" rel="noopener noreferrer">Comprar</a>
-              }
+              <button
+                type="button"
+                class="btn"
+                [disabled]="busy() !== null"
+                (click)="buy(p.id)"
+                [attr.data-testid]="'buy-' + p.id"
+              >
+                {{ busy() === p.id ? 'Abriendo Wompi…' : 'Comprar' }}
+              </button>
             </div>
           </div>
         </li>
@@ -62,7 +84,15 @@ interface Plantilla {
         Las tres plantillas juntas por <strong>$39.900 COP</strong>. Ideal si manejas un negocio
         pequeño y quieres liquidar, pagar nómina y llevar tu presupuesto.
       </p>
-      <button type="button" class="btn" disabled>Próximamente</button>
+      <button
+        type="button"
+        class="btn"
+        [disabled]="busy() !== null"
+        (click)="buy('combo')"
+        data-testid="buy-combo"
+      >
+        {{ busy() === 'combo' ? 'Abriendo Wompi…' : 'Comprar el combo' }}
+      </button>
     </section>
 
     <p class="disclaimer" role="note">
@@ -72,6 +102,25 @@ interface Plantilla {
     </p>
   `,
   styles: `
+    .buyer {
+      display: grid;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .buyer input {
+      font: inherit;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      max-width: 26rem;
+    }
+    .buyer small {
+      color: var(--muted);
+    }
+    .error {
+      color: var(--neg);
+      margin: 0;
+    }
     .eyebrow {
       font-size: 0.9rem;
       margin: 0 0 0.5rem;
@@ -136,7 +185,6 @@ export class Plantillas implements OnInit {
       price: '$14.900 COP',
       image: 'plantillas/Liquidacion-2026.webp',
       sample: 'plantillas/Cuadre-Liquidacion-2026-MUESTRA.xlsx',
-      comingSoon: true,
     },
     {
       id: 'nomina',
@@ -146,7 +194,6 @@ export class Plantillas implements OnInit {
       price: '$29.900 COP',
       image: 'plantillas/Nomina-Pequeno-Negocio-2026.webp',
       sample: 'plantillas/Cuadre-Nomina-Pequeno-Negocio-2026-MUESTRA.xlsx',
-      comingSoon: true,
     },
     {
       id: 'presupuesto',
@@ -156,11 +203,38 @@ export class Plantillas implements OnInit {
       price: '$9.900 COP',
       image: 'plantillas/Presupuesto-Personal.webp',
       sample: 'plantillas/Cuadre-Presupuesto-Personal-MUESTRA.xlsx',
-      comingSoon: true,
     },
   ];
 
+  protected readonly email = signal('');
+  protected readonly busy = signal<Sku | null>(null);
+  protected readonly error = signal<string | null>(null);
+
   private readonly seo = inject(SeoService);
+  private readonly payments = inject(PaymentsService);
+
+  /** Pide a la API la referencia y la firma (precio fijo en el servidor) y abre el checkout. */
+  protected async buy(sku: Sku): Promise<void> {
+    this.error.set(null);
+    const raw = this.email().trim();
+    if (raw && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw)) {
+      this.error.set('Revisa el correo o déjalo vacío.');
+      return;
+    }
+    this.busy.set(sku);
+    try {
+      const c = await this.payments.checkout(sku, raw || null);
+      try {
+        localStorage.setItem(LAST_ORDER_KEY, c.reference);
+      } catch {
+        /* sin localStorage */
+      }
+      window.location.assign(this.payments.buildCheckoutUrl(c, raw || null));
+    } catch {
+      this.error.set('No pudimos abrir el pago. Intenta de nuevo en unos segundos.');
+      this.busy.set(null);
+    }
+  }
 
   ngOnInit(): void {
     this.seo.set({
