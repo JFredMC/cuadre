@@ -449,6 +449,20 @@ details p {
   }
 }
 @media (min-width: 1024px) {
+  /* Las calculadoras pasan del ancho de lectura al banco de trabajo. */
+  .container-narrow:has(app-calc-page) {
+    max-width: 1180px;
+  }
+  .workbench-result .result {
+    margin-top: 0;
+  }
+  fieldset.hours {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.25rem;
+  }
+  fieldset.hours legend {
+    grid-column: 1 / -1;
+  }
   h1 {
     font-size: clamp(2rem, 3.2vw, 2.75rem);
   }

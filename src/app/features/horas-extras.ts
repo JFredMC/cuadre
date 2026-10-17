@@ -32,7 +32,7 @@ const pct = (n: number) => `${Math.round(n * 100)}%`;
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-calc-page [page]="page">
-      <form class="card form" (submit)="$event.preventDefault()">
+      <form calcForm class="card form" (submit)="$event.preventDefault()">
         <app-money-input label="Salario mensual" name="salario" [(value)]="salary" />
         <label class="field">
           <span>Fecha en que trabajaste las horas</span>
@@ -67,6 +67,7 @@ const pct = (n: number) => `${Math.round(n * 100)}%`;
         </fieldset>
       </form>
       <app-result-table
+        calcResult
         totalLabel="Total a pagar por horas extras y recargos"
         [total]="r().total"
         [rows]="rows()"
