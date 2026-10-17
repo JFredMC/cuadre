@@ -25,8 +25,17 @@ import { AdSlot } from '../shared/ad-slot';
       .hero {
         max-width: 48rem;
       }
-      .values {
-        max-width: 56rem;
+      /* Mismo ancho que las tarjetas de arriba; los datos se reparten en columnas. */
+      .values dl {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0 2rem;
+      }
+      .values .updated {
+        max-width: 60rem;
+      }
+      .promo p {
+        max-width: 48rem;
       }
     }
   `,
@@ -85,7 +94,7 @@ import { AdSlot } from '../shared/ad-slot';
         Valores actualizados a {{ updated }}.
       </p>
     </section>
-    <section class="card values" aria-labelledby="plantillas">
+    <section class="card values promo" aria-labelledby="plantillas">
       <h2 id="plantillas">Plantillas de Excel</h2>
       <p>
         ¿Necesitas liquidar a varios o llevar la nómina de tu negocio? Las mismas fórmulas, en
