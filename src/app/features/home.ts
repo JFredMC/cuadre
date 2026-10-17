@@ -21,6 +21,10 @@ import { AdSlot } from '../shared/ad-slot';
     .link-card {
       height: 100%;
     }
+    /* Separación entre los bloques finales y con el aviso/pie que sigue. */
+    .values {
+      margin-bottom: 1rem;
+    }
     @media (min-width: 1024px) {
       .hero {
         max-width: 48rem;
@@ -36,6 +40,9 @@ import { AdSlot } from '../shared/ad-slot';
       }
       .promo p {
         max-width: 48rem;
+      }
+      .values {
+        margin-bottom: 1.5rem;
       }
     }
   `,
