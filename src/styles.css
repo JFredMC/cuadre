@@ -56,9 +56,29 @@ h2 {
   background: var(--brand);
   color: var(--brand-ink);
   padding: 0.6rem 1rem;
+}
+.topbar-inner {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+}
+.topbar nav {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.35rem;
+  min-width: 0;
+  width: 100%;
+}
+.topbar .nav {
+  width: 100%;
+  min-width: 0;
+}
+.topbar .nav-extra {
+  align-self: flex-start;
 }
 .brand {
   color: inherit;
@@ -89,11 +109,13 @@ h2 {
   border-radius: 999px;
 }
 .nav-extra {
-  margin-left: 0.75rem;
   font-weight: 600;
-  color: var(--teal, #0f766e);
+  color: #d9f2ee;
   text-decoration: none;
   white-space: nowrap;
+  font-size: 0.875rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
 }
 .nav-extra.active,
 .nav a.active,
@@ -102,9 +124,12 @@ h2 {
   color: #fff;
 }
 .container {
-  max-width: 760px;
+  max-width: 1180px;
   margin: 0 auto;
   padding: 1.25rem 1rem 2rem;
+}
+.container-narrow {
+  max-width: 760px;
 }
 .lead {
   color: var(--muted);
@@ -255,7 +280,24 @@ dd.neg {
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
-  border: 0;
+  border: 1px solid var(--brand);
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(16, 48, 45, 0.18);
+}
+.btn:hover {
+  background: #0b5f58;
+  border-color: #0b5f58;
+}
+.btn:focus-visible,
+.nav a:focus-visible,
+.nav-extra:focus-visible {
+  outline: 3px solid rgba(244, 183, 64, 0.75);
+  outline-offset: 2px;
+}
+.btn[disabled] {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 .btn-wa {
   background: #25d366;
@@ -263,9 +305,22 @@ dd.neg {
   flex: 1 1 auto;
 }
 .btn-ghost {
+  background: #fff;
+  color: var(--brand);
+  border: 1px solid var(--brand);
+  box-shadow: none;
+}
+.btn-ghost:hover {
+  background: #e7f3f1;
+  color: #0b5f58;
+}
+.result .btn-ghost {
   background: transparent;
   color: #eaf6f4;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+.result .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
 }
 .disclaimer {
   font-size: 0.85rem;
@@ -360,6 +415,11 @@ details p {
 .footer p {
   margin: 0.3rem 0;
 }
+.footer-inner {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
 .signature a {
   font-weight: 700;
   text-decoration: none;
@@ -367,10 +427,16 @@ details p {
 }
 @media (min-width: 720px) {
   .topbar {
+    padding: 0.7rem 1.5rem;
+  }
+  .topbar-inner {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0.7rem 1.5rem;
+  }
+  .topbar nav {
+    flex-direction: row;
+    align-items: center;
   }
   .grid2 {
     grid-template-columns: 1fr 1fr;
@@ -382,8 +448,36 @@ details p {
     padding-top: 2rem;
   }
 }
+@media (min-width: 1024px) {
+  h1 {
+    font-size: clamp(2rem, 3.2vw, 2.75rem);
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+  .lead {
+    font-size: 1.06rem;
+    max-width: 48rem;
+  }
+  .container {
+    padding: 2.5rem 1.5rem 3.5rem;
+  }
+  .card {
+    padding: 1.5rem;
+  }
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .footer {
+    padding-inline: 1.5rem;
+  }
+}
 .dl-menu {
   position: relative;
+  background: transparent;
+  border: 0;
+  padding: 0;
 }
 .dl-menu > summary {
   list-style: none;

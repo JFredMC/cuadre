@@ -78,7 +78,7 @@ interface Plantilla {
       }
     </ul>
 
-    <section class="card values" aria-labelledby="combo">
+    <section class="card values combo" aria-labelledby="combo">
       <h2 id="combo">Combo las 3</h2>
       <p>
         Las tres plantillas juntas por <strong>$39.900 COP</strong>. Ideal si manejas un negocio
@@ -171,6 +171,26 @@ interface Plantilla {
       }
       .body {
         padding: 1.25rem 1.25rem 1.25rem 0;
+      }
+    }
+    @media (min-width: 1024px) {
+      .buyer {
+        max-width: 48rem;
+      }
+      .plantilla-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: stretch;
+      }
+      .plantilla {
+        grid-template-columns: 1fr;
+        align-items: start;
+        height: 100%;
+      }
+      .body {
+        padding: 0 1.5rem 1.5rem;
+      }
+      .combo {
+        width: 100%;
       }
     }
   `,
