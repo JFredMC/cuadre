@@ -21,12 +21,28 @@ import { AdSlot } from '../shared/ad-slot';
     .link-card {
       height: 100%;
     }
+    /* Separación entre los bloques finales y con el aviso/pie que sigue. */
+    .values {
+      margin-bottom: 1rem;
+    }
     @media (min-width: 1024px) {
       .hero {
         max-width: 48rem;
       }
+      /* Mismo ancho que las tarjetas de arriba; los datos se reparten en columnas. */
+      .values dl {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0 2rem;
+      }
+      .values .updated {
+        max-width: 60rem;
+      }
+      .promo p {
+        max-width: 48rem;
+      }
       .values {
-        max-width: 56rem;
+        margin-bottom: 1.5rem;
       }
     }
   `,
@@ -85,7 +101,7 @@ import { AdSlot } from '../shared/ad-slot';
         Valores actualizados a {{ updated }}.
       </p>
     </section>
-    <section class="card values" aria-labelledby="plantillas">
+    <section class="card values promo" aria-labelledby="plantillas">
       <h2 id="plantillas">Plantillas de Excel</h2>
       <p>
         ¿Necesitas liquidar a varios o llevar la nómina de tu negocio? Las mismas fórmulas, en

@@ -107,3 +107,27 @@ for (const [fmt, name, sig] of [
     if (out) fs.copyFileSync(path, `${out}/sample.${fmt}`);
   });
 }
+
+test('menú hamburguesa en pantallas pequeñas', async ({ page }) => {
+  test.skip((page.viewportSize()?.width ?? 9999) >= 1024, 'solo bajo el breakpoint de escritorio');
+  await page.goto('./');
+  const button = page.locator('.menu-toggle');
+  await expect(button).toHaveAttribute('aria-label', 'Abrir el menú');
+  await expect(button).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('#main-nav').getByRole('link', { name: 'Salario neto' })).toBeHidden();
+  await button.click();
+  await expect(button).toHaveAttribute('aria-expanded', 'true');
+  await page.locator('#main-nav').getByRole('link', { name: 'Salario neto' }).click();
+  await expect(page).toHaveURL(/salario-neto/);
+  await expect(button).toHaveAttribute('aria-expanded', 'false');
+});
+
+test('el tema elegido persiste al recargar', async ({ page }) => {
+  await page.goto('./');
+  await page.getByRole('button', { name: 'Activar modo oscuro' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await page.getByRole('button', { name: 'Activar modo claro' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+});
