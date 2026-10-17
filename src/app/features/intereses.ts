@@ -13,7 +13,7 @@ import { num, urlState } from '../shared/url-state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-calc-page [page]="page">
-      <form class="card form" (submit)="$event.preventDefault()">
+      <form calcForm class="card form" (submit)="$event.preventDefault()">
         <app-money-input label="Valor de tus cesantías" name="cesantias" [(value)]="cesantias" />
         <label class="field">
           <span>Días trabajados en el año (máximo 360)</span>
@@ -28,7 +28,12 @@ import { num, urlState } from '../shared/url-state';
           />
         </label>
       </form>
-      <app-result-table totalLabel="Intereses de cesantías" [total]="value()" [rows]="rows()">
+      <app-result-table
+        calcResult
+        totalLabel="Intereses de cesantías"
+        [total]="value()"
+        [rows]="rows()"
+      >
         <p class="note">
           Si te los pagan tarde, el empleador debe pagarte el doble (Ley 52 de 1975).
         </p>

@@ -22,7 +22,7 @@ import { isoOr, num, urlState } from '../shared/url-state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-calc-page [page]="page">
-      <form class="card form" (submit)="$event.preventDefault()">
+      <form calcForm class="card form" (submit)="$event.preventDefault()">
         <app-money-input label="Salario mensual" name="salario" [(value)]="salary" />
         <label class="field">
           <span>Semestre</span>
@@ -37,7 +37,7 @@ import { isoOr, num, urlState } from '../shared/url-state';
           <small>Si llevas más tiempo, deja cualquier fecha anterior al semestre.</small>
         </label>
       </form>
-      <app-result-table totalLabel="Tu prima" [total]="value()" [rows]="rows()">
+      <app-result-table calcResult totalLabel="Tu prima" [total]="value()" [rows]="rows()">
         <app-share-bar [text]="shareText()" [url]="shareUrl()" />
       </app-result-table>
     </app-calc-page>
