@@ -12,6 +12,13 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <link rel="manifest" href="site.webmanifest" />
+    <script>
+      // Tema guardado antes del primer pintado, para que no parpadee.
+      try {
+        var t = localStorage.getItem('cuadre.theme');
+        if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <app-root></app-root>

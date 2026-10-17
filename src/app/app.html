@@ -1,18 +1,45 @@
 <a class="skip" href="#main">Saltar al contenido</a>
-<header class="topbar">
+<header class="topbar" [class.scrolled]="scrolled()">
   <div class="topbar-inner">
-    <a class="brand" routerLink="/" aria-label="Cuadre, inicio">
+    <a class="brand" routerLink="/" aria-label="Cuadre, inicio" (click)="closeMenu()">
       <span class="logo" aria-hidden="true">▦</span> Cuadre
     </a>
-    <nav aria-label="Calculadoras">
+    <div class="header-actions">
+      <button
+        type="button"
+        class="icon-btn theme-toggle"
+        (click)="toggleTheme()"
+        [attr.aria-pressed]="theme() === 'dark'"
+        [attr.aria-label]="theme() === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'"
+        [title]="theme() === 'dark' ? 'Modo claro' : 'Modo oscuro'"
+      >
+        <span aria-hidden="true">{{ theme() === 'dark' ? '☀' : '☾' }}</span>
+      </button>
+      <button
+        #menuButton
+        type="button"
+        class="icon-btn menu-toggle"
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="main-nav"
+        [attr.aria-label]="menuOpen() ? 'Cerrar el menú' : 'Abrir el menú'"
+      >
+        <span aria-hidden="true">{{ menuOpen() ? '✕' : '☰' }}</span>
+      </button>
+    </div>
+    <nav id="main-nav" aria-label="Calculadoras" [class.open]="menuOpen()">
       <ul class="nav">
         @for (c of calculators; track c.slug) {
           <li>
-            <a [routerLink]="['/', c.slug]" routerLinkActive="active">{{ c.name }}</a>
+            <a [routerLink]="['/', c.slug]" routerLinkActive="active" (click)="closeMenu()">{{
+              c.name
+            }}</a>
           </li>
         }
       </ul>
-      <a class="nav-extra" routerLink="/plantillas" routerLinkActive="active">Plantillas</a>
+      <a class="nav-extra" routerLink="/plantillas" routerLinkActive="active" (click)="closeMenu()"
+        >Plantillas</a
+      >
     </nav>
   </div>
 </header>

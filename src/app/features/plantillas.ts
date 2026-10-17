@@ -141,7 +141,7 @@ interface Plantilla {
       width: 100%;
       height: auto;
       display: block;
-      background: #f8fafc;
+      background: var(--soft);
     }
     .body {
       padding: 0 1.25rem 1.25rem;
@@ -152,7 +152,7 @@ interface Plantilla {
     }
     .price {
       font-weight: 700;
-      color: #0f766e;
+      color: var(--link);
       margin: 0.75rem 0;
     }
     .actions {
