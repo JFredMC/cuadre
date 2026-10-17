@@ -13,7 +13,7 @@ import { num, urlState } from '../shared/url-state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-calc-page [page]="page">
-      <form class="card form" (submit)="$event.preventDefault()">
+      <form calcForm class="card form" (submit)="$event.preventDefault()">
         <app-money-input label="Salario mensual" name="salario" [(value)]="salary" />
         <app-money-input
           label="Otros pagos salariales del mes (opcional)"
@@ -22,7 +22,7 @@ import { num, urlState } from '../shared/url-state';
           [(value)]="other"
         />
       </form>
-      <app-result-table totalLabel="Recibes al mes" [total]="r().net" [rows]="rows()">
+      <app-result-table calcResult totalLabel="Recibes al mes" [total]="r().net" [rows]="rows()">
         @if (r().incomeInUvt > 95) {
           <p class="note">
             Tu ingreso supera 95 UVT, así que es probable que te apliquen retención en la fuente,

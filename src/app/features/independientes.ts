@@ -13,7 +13,7 @@ import { num, urlState } from '../shared/url-state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-calc-page [page]="page">
-      <form class="card form" (submit)="$event.preventDefault()">
+      <form calcForm class="card form" (submit)="$event.preventDefault()">
         <app-money-input
           label="Ingreso mensual (sin IVA)"
           name="ingreso"
@@ -34,7 +34,12 @@ import { num, urlState } from '../shared/url-state';
           >
         </label>
       </form>
-      <app-result-table totalLabel="Pagas al mes en la PILA" [total]="r().total" [rows]="rows()">
+      <app-result-table
+        calcResult
+        totalLabel="Pagas al mes en la PILA"
+        [total]="r().total"
+        [rows]="rows()"
+      >
         @if (!r().required) {
           <p class="note">
             Con ingresos menores a un salario mínimo no estás obligado a cotizar como independiente.

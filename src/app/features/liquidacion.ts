@@ -13,7 +13,7 @@ import { isoOr, num, urlState } from '../shared/url-state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-calc-page [page]="page">
-      <form class="card form" (submit)="$event.preventDefault()">
+      <form calcForm class="card form" (submit)="$event.preventDefault()">
         <div class="grid2">
           <label class="field">
             <span>Fecha de inicio</span>
@@ -38,7 +38,12 @@ import { isoOr, num, urlState } from '../shared/url-state';
         </label>
       </form>
       @if (result(); as r) {
-        <app-result-table totalLabel="Total liquidación" [total]="r.total" [rows]="rows()">
+        <app-result-table
+          calcResult
+          totalLabel="Total liquidación"
+          [total]="r.total"
+          [rows]="rows()"
+        >
           <p class="note">
             {{ r.totalDays }} días trabajados (año de 360 días).
             {{
@@ -51,7 +56,7 @@ import { isoOr, num, urlState } from '../shared/url-state';
           <app-share-bar [text]="shareText()" [url]="shareUrl()" />
         </app-result-table>
       } @else {
-        <p class="error" role="alert">
+        <p calcResult class="error" role="alert">
           Revisa las fechas: la terminación debe ser posterior al inicio.
         </p>
       }
