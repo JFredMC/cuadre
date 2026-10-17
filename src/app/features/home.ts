@@ -16,6 +16,20 @@ import { AdSlot } from '../shared/ad-slot';
   selector: 'app-home',
   imports: [RouterLink, AdSlot],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styles: `
+    .cards li,
+    .link-card {
+      height: 100%;
+    }
+    @media (min-width: 1024px) {
+      .hero {
+        max-width: 48rem;
+      }
+      .values {
+        max-width: 56rem;
+      }
+    }
+  `,
   template: `
     <section class="hero">
       <h1>Calculadoras laborales para Colombia 2026</h1>
